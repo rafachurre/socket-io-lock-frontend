@@ -1,0 +1,32 @@
+.inputRow{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 10px;
+
+    input{
+        display: inline-block;
+        width: 100%;
+        border: 1px solid black;
+        font-size: 1rem;
+        padding: 1rem 2rem 1rem 1rem;
+        border-radius: 10px;
+        outline: none;
+        &:disabled{
+            background: #dddddd;
+        }
+    }
+
+    label{
+        font-size: 1rem;
+        padding: 0 2rem;
+        min-width: 100px;
+    }
+    
+    i{
+        position: absolute;
+        right: 10px;
+    }
+}

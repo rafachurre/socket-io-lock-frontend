@@ -1,0 +1,47 @@
+button{
+  padding: 1rem;
+  background: #324eee;
+  color: white;
+  font-size: 1rem;
+  border-radius: 10px;
+  min-width: 200px;
+  align-self: flex-end;
+  outline: none;
+  box-shadow: 0 4px 4px #999999;
+  &:active{
+    box-shadow: 0 0 0;
+    transform: translateY(4px);
+  }
+  &:disabled{
+    box-shadow: 0 0 0;
+    opacity: 0.3;
+  }
+}
+
+.textareaRow {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 10px;
+
+  textarea{
+    display: inline-block;
+    width: 100%;
+    border: 1px solid black;
+    font-size: 1rem;
+    padding: 1rem 2rem 1rem 1rem;
+    border-radius: 10px;
+    outline: none;
+    &:disabled{
+        background: #dddddd;
+    }
+  }
+
+  label{
+      font-size: 1rem;
+      padding: 0 2rem;
+      min-width: 100px;
+  }
+}

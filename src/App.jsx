@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
-import "./App.css"
-import { config } from "./config/config"
+import "./App.scss";
+import { config } from "./config/config";
+import { Form } from './pages'; 
 
 class App extends Component {
   constructor() {
@@ -9,13 +10,10 @@ class App extends Component {
     this.state = {
       socket: undefined,
       lock: false,
-      name: undefined,
-      lastName: undefined,
-      country: undefined
+      currentData: {}
     };
 
-    this.sendData = this.sendData.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -24,48 +22,22 @@ class App extends Component {
 
     socket.on("lock", () => this.setState({ lock: true }));
     socket.on("unlock", () => this.setState({ lock: false }));
-    socket.on("newData", (data) => this.setState({ name: data.name, lastName: data.lastName, country: data.country }));
+    socket.on("newData", (data) => this.setState({ currentData: data }));
 
     this.setState({ socket });
   }
 
-  sendData() {
-    const { socket, name, lastName, country } = this.state;
-    const newData = {
-      name: name,
-      lastName: lastName,
-      country: country
-    };
-    console.log(newData);
+  onSubmit(newData) {
+    const { socket } = this.state;
 
-    socket.emit("saveData", newData)
-  }
-
-  onInputChange(event) {
-    const input = event.currentTarget;
-    this.setState({ [`${input.id}`]: input.value })
+    socket.emit("saveData", newData);
   }
 
   render() {
-    const { lock, name, lastName, country } = this.state;
+    const { lock, currentData } = this.state;
     return (
       <div className="container">
-        <div className="row">
-          <label htmlFor="name">Name:</label>
-          <input id="name" disabled={lock} value={name} onChange={this.onInputChange} />
-          {lock && <i class="material-icons">lock</i>}
-        </div>
-        <div className="row">
-          <label htmlFor="lastName">Last Name:</label>
-          <input id="lastName" disabled={lock} value={lastName} onChange={this.onInputChange} />
-          {lock && <i class="material-icons">lock</i>}
-        </div>
-        <div className="row">
-          <label htmlFor="country">Country:</label>
-          <input id="country" disabled={lock} value={country} onChange={this.onInputChange} />
-          {lock && <i class="material-icons">lock</i>}
-        </div>
-        <button onClick={this.sendData} disabled={lock}>Save</button>
+        <Form onSubmit={this.onSubmit} currentData={currentData} lock={lock}></Form>
       </div>
     );
   }
